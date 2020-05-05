@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.ConstructionDesignMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.ConstructionDesign">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="david_side_wall" jdbcType="VARCHAR" property="davidSideWall"/>
+        <result column="david_filling" jdbcType="VARCHAR" property="davidFilling"/>
+        <result column="david_lining" jdbcType="VARCHAR" property="davidLining"/>
+        <result column="lining_steel_cage" jdbcType="VARCHAR" property="liningSteelCage"/>
+        <result column="primary_shotcrete" jdbcType="VARCHAR" property="primaryShotcrete"/>
+        <result column="steel_fabric" jdbcType="VARCHAR" property="steelFabric"/>
+        <result column="steel" jdbcType="VARCHAR" property="steel"/>
+        <result column="anchor" jdbcType="VARCHAR" property="anchor"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, david_side_wall, david_filling, david_lining, lining_steel_cage, primary_shotcrete,
+        steel_fabric, steel, anchor
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from construction_design
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from construction_design
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into construction_design (id) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.ConstructionDesign">
+        update construction_design
+        <set>
+            <if test="davidSideWall != null">
+                david_side_wall = #{davidSideWall,jdbcType=VARCHAR},
+            </if>
+            <if test="davidFilling != null">
+                david_filling = #{davidFilling,jdbcType=VARCHAR},
+            </if>
+            <if test="davidLining != null">
+                david_lining = #{davidLining,jdbcType=VARCHAR},
+            </if>
+            <if test="liningSteelCage != null">
+                lining_steel_cage = #{liningSteelCage,jdbcType=VARCHAR},
+            </if>
+            <if test="primaryShotcrete != null">
+                primary_shotcrete = #{primaryShotcrete,jdbcType=VARCHAR},
+            </if>
+            <if test="steelFabric != null">
+                steel_fabric = #{steelFabric,jdbcType=VARCHAR},
+            </if>
+            <if test="steel != null">
+                steel = #{steel,jdbcType=VARCHAR},
+            </if>
+            <if test="anchor != null">
+                anchor = #{anchor,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>

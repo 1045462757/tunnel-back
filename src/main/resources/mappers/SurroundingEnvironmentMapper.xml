@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.SurroundingEnvironmentMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.SurroundingEnvironment">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="surface_water" jdbcType="VARCHAR" property="surfaceWater"/>
+        <result column="quality" jdbcType="VARCHAR" property="quality"/>
+        <result column="diving" jdbcType="VARCHAR" property="diving"/>
+        <result column="ground_water" jdbcType="VARCHAR" property="groundWater"/>
+        <result column="vegetation_type" jdbcType="VARCHAR" property="vegetationType"/>
+        <result column="vegetation_root_system" jdbcType="VARCHAR" property="vegetationRootSystem"/>
+        <result column="excavation_hole_slag" jdbcType="VARCHAR" property="excavationHoleSlag"/>
+        <result column="abandon_slag_field" jdbcType="VARCHAR" property="abandonSlagField"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, surface_water, quality, diving, ground_water, vegetation_type, vegetation_root_system, 
+    excavation_hole_slag, abandon_slag_field
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from surrounding_environment
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from surrounding_environment
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into surrounding_environment (id) values (#{id,jdbcType=CHAR})
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.SurroundingEnvironment">
+        update surrounding_environment
+        <set>
+            <if test="surfaceWater != null">
+                surface_water = #{surfaceWater,jdbcType=VARCHAR},
+            </if>
+            <if test="quality != null">
+                quality = #{quality,jdbcType=VARCHAR},
+            </if>
+            <if test="diving != null">
+                diving = #{diving,jdbcType=VARCHAR},
+            </if>
+            <if test="groundWater != null">
+                ground_water = #{groundWater,jdbcType=VARCHAR},
+            </if>
+            <if test="vegetationType != null">
+                vegetation_type = #{vegetationType,jdbcType=VARCHAR},
+            </if>
+            <if test="vegetationRootSystem != null">
+                vegetation_root_system = #{vegetationRootSystem,jdbcType=VARCHAR},
+            </if>
+            <if test="excavationHoleSlag != null">
+                excavation_hole_slag = #{excavationHoleSlag,jdbcType=VARCHAR},
+            </if>
+            <if test="abandonSlagField != null">
+                abandon_slag_field = #{abandonSlagField,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>

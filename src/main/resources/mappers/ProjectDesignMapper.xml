@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.ProjectDesignMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.ProjectDesign">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="owner_unit" jdbcType="VARCHAR" property="ownerUnit"/>
+        <result column="design_unit" jdbcType="VARCHAR" property="designUnit"/>
+        <result column="construction_unit" jdbcType="VARCHAR" property="constructionUnit"/>
+        <result column="supervision_unit" jdbcType="VARCHAR" property="supervisionUnit"/>
+        <result column="highway_grade" jdbcType="VARCHAR" property="highwayGrade"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="clearance" jdbcType="VARCHAR" property="clearance"/>
+        <result column="opening_section" jdbcType="VARCHAR" property="openingSection"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, owner_unit, design_unit, construction_unit, supervision_unit, highway_grade,
+        `location`, clearance, opening_section
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from project_design
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from project_design
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into project_design (id) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.ProjectDesign">
+        update project_design
+        <set>
+            <if test="ownerUnit != null">
+                owner_unit = #{ownerUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="designUnit != null">
+                design_unit = #{designUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="constructionUnit != null">
+                construction_unit = #{constructionUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="supervisionUnit != null">
+                supervision_unit = #{supervisionUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="highwayGrade != null">
+                highway_grade = #{highwayGrade,jdbcType=VARCHAR},
+            </if>
+            <if test="location != null">
+                `location` = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="clearance != null">
+                clearance = #{clearance,jdbcType=VARCHAR},
+            </if>
+            <if test="openingSection != null">
+                opening_section = #{openingSection,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+
+</mapper>

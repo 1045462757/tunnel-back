@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.PreliminaryDesignMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.PreliminaryDesign">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="tunnel_pile_number_coordinates" jdbcType="VARCHAR" property="tunnelPileNumberCoordinates"/>
+        <result column="type_of_lining_along_pile" jdbcType="VARCHAR" property="typeOfLiningAlongPile"/>
+        <result column="david_lining" jdbcType="VARCHAR" property="davidLining"/>
+        <result column="primary_shotcrete" jdbcType="VARCHAR" property="primaryShotcrete"/>
+        <result column="anchor" jdbcType="VARCHAR" property="anchor"/>
+        <result column="pavement_layer" jdbcType="VARCHAR" property="pavementLayer"/>
+        <result column="equipment_cavern" jdbcType="VARCHAR" property="equipmentCavern"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, tunnel_pile_number_coordinates, type_of_lining_along_pile, david_lining, primary_shotcrete,
+        anchor, pavement_layer, equipment_cavern
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from preliminary_design
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from preliminary_design
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into preliminary_design (id) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.PreliminaryDesign">
+        update preliminary_design
+        <set>
+            <if test="tunnelPileNumberCoordinates != null">
+                tunnel_pile_number_coordinates = #{tunnelPileNumberCoordinates,jdbcType=VARCHAR},
+            </if>
+            <if test="typeOfLiningAlongPile != null">
+                type_of_lining_along_pile = #{typeOfLiningAlongPile,jdbcType=VARCHAR},
+            </if>
+            <if test="davidLining != null">
+                david_lining = #{davidLining,jdbcType=VARCHAR},
+            </if>
+            <if test="primaryShotcrete != null">
+                primary_shotcrete = #{primaryShotcrete,jdbcType=VARCHAR},
+            </if>
+            <if test="anchor != null">
+                anchor = #{anchor,jdbcType=VARCHAR},
+            </if>
+            <if test="pavementLayer != null">
+                pavement_layer = #{pavementLayer,jdbcType=VARCHAR},
+            </if>
+            <if test="equipmentCavern != null">
+                equipment_cavern = #{equipmentCavern,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>

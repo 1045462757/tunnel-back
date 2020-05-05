@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.Sheet1Mapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.Sheet1">
+        <result column="survey_result" jdbcType="VARCHAR" property="surveyResult"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="select" resultMap="BaseResultMap">
+        SELECT create_time,survey_result
+        FROM `sheet1`
+        where device_id = #{deviceId,jdbcType=VARCHAR} and create_time between
+        #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}
+        ORDER BY create_time asc
+    </select>
+
+</mapper>

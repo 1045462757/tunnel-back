@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.MonitoringInformationMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.MonitoringInformation">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="surface_subsidence_data" jdbcType="VARCHAR" property="surfaceSubsidenceData"/>
+        <result column="vault_sink_data" jdbcType="VARCHAR" property="vaultSinkData"/>
+        <result column="hole_convergence_data" jdbcType="VARCHAR" property="holeConvergenceData"/>
+        <result column="surface_subsidence_data_warning" jdbcType="VARCHAR" property="surfaceSubsidenceDataWarning"/>
+        <result column="vault_sink_data_warning" jdbcType="VARCHAR" property="vaultSinkDataWarning"/>
+        <result column="hole_convergence_data_warning" jdbcType="VARCHAR" property="holeConvergenceDataWarning"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, `state`, surface_subsidence_data, vault_sink_data, hole_convergence_data, surface_subsidence_data_warning,
+        vault_sink_data_warning, hole_convergence_data_warning
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from monitoring_information
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from monitoring_information
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into monitoring_information (id) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.MonitoringInformation">
+        update monitoring_information
+        <set>
+            <if test="state != null">
+                `state` = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="surfaceSubsidenceData != null">
+                surface_subsidence_data = #{surfaceSubsidenceData,jdbcType=VARCHAR},
+            </if>
+            <if test="vaultSinkData != null">
+                vault_sink_data = #{vaultSinkData,jdbcType=VARCHAR},
+            </if>
+            <if test="holeConvergenceData != null">
+                hole_convergence_data = #{holeConvergenceData,jdbcType=VARCHAR},
+            </if>
+            <if test="surfaceSubsidenceDataWarning != null">
+                surface_subsidence_data_warning = #{surfaceSubsidenceDataWarning,jdbcType=VARCHAR},
+            </if>
+            <if test="vaultSinkDataWarning != null">
+                vault_sink_data_warning = #{vaultSinkDataWarning,jdbcType=VARCHAR},
+            </if>
+            <if test="holeConvergenceDataWarning != null">
+                hole_convergence_data_warning = #{holeConvergenceDataWarning,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>

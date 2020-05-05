@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.TunnelMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.Tunnel">
+        <id column="tunnel_id" jdbcType="CHAR" property="tunnelId"/>
+        <result column="tunnel_name" jdbcType="VARCHAR" property="tunnelName"/>
+        <result column="tunnel_intro" jdbcType="VARCHAR" property="tunnelIntro"/>
+        <!--        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>-->
+        <!--        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>-->
+        <association column="project_design" property="projectDesign" javaType="com.example.tunnel.domain.ProjectDesign"
+                     select="com.example.tunnel.mapper.ProjectDesignMapper.selectByPrimaryKey"/>
+        <association column="preliminary_design" property="preliminaryDesign"
+                     javaType="com.example.tunnel.domain.PreliminaryDesign"
+                     select="com.example.tunnel.mapper.PreliminaryDesignMapper.selectByPrimaryKey"/>
+        <association column="construction_design" property="constructionDesign"
+                     javaType="com.example.tunnel.domain.ConstructionDesign"
+                     select="com.example.tunnel.mapper.ConstructionDesignMapper.selectByPrimaryKey"/>
+        <association column="surrounding_environment" property="surroundingEnvironment"
+                     javaType="com.example.tunnel.domain.SurroundingEnvironment"
+                     select="com.example.tunnel.mapper.SurroundingEnvironmentMapper.selectByPrimaryKey"/>
+        <association column="construction_information" property="constructionInformation"
+                     javaType="com.example.tunnel.domain.ConstructionInformation"
+                     select="com.example.tunnel.mapper.ConstructionInformationMapper.selectByPrimaryKey"/>
+        <association column="monitoring_information" property="monitoringInformation"
+                     javaType="com.example.tunnel.domain.MonitoringInformation"
+                     select="com.example.tunnel.mapper.MonitoringInformationMapper.selectByPrimaryKey"/>
+        <association column="secondary_lining" property="secondaryLining"
+                     javaType="com.example.tunnel.domain.SecondaryLining"
+                     select="com.example.tunnel.mapper.SecondaryLiningMapper.selectByPrimaryKey"/>
+        <association column="basic_formation_information" property="basicFormationInformation"
+                     javaType="com.example.tunnel.domain.BasicFormationInformation"
+                     select="com.example.tunnel.mapper.BasicFormationInformationMapper.selectByPrimaryKey"/>
+    </resultMap>
+
+    <resultMap id="SimpleResultMap" type="com.example.tunnel.domain.TunnelDO">
+        <id column="tunnel_id" jdbcType="CHAR" property="tunnelId"/>
+        <result column="tunnel_name" jdbcType="VARCHAR" property="tunnelName"/>
+        <result column="tunnel_intro" jdbcType="VARCHAR" property="tunnelIntro"/>
+        <result column="project_design" jdbcType="CHAR" property="projectDesign"/>
+        <result column="preliminary_design" jdbcType="CHAR" property="preliminaryDesign"/>
+        <result column="construction_design" jdbcType="CHAR" property="constructionDesign"/>
+        <result column="surrounding_environment" jdbcType="CHAR" property="surroundingEnvironment"/>
+        <result column="construction_information" jdbcType="CHAR" property="constructionInformation"/>
+        <result column="monitoring_information" jdbcType="CHAR" property="monitoringInformation"/>
+        <result column="secondary_lining" jdbcType="CHAR" property="secondaryLining"/>
+        <result column="basic_formation_information" jdbcType="CHAR" property="basicFormationInformation"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tunnel_id, tunnel_name, tunnel_intro, project_design, preliminary_design, construction_design,
+        surrounding_environment, construction_information, monitoring_information, secondary_lining,
+        basic_formation_information, create_time, update_time
+    </sql>
+
+    <sql id="Simple_Column_List">
+        tunnel_id, tunnel_name, tunnel_intro, project_design, preliminary_design, construction_design,
+        surrounding_environment, construction_information, monitoring_information, secondary_lining,
+        basic_formation_information
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Simple_Column_List"/>
+        from tunnel
+        where tunnel_id = #{tunnelId,jdbcType=CHAR}
+    </select>
+
+    <select id="select" parameterType="java.lang.String" resultMap="SimpleResultMap">
+        select
+        <include refid="Simple_Column_List"/>
+        from tunnel
+        where tunnel_id = #{tunnelId,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from tunnel
+        where tunnel_id = #{tunnelId,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert">
+        insert into tunnel (tunnel_id, tunnel_name, tunnel_intro,
+        project_design, preliminary_design, construction_design,
+        surrounding_environment, construction_information,
+        monitoring_information, secondary_lining,
+        basic_formation_information)
+        values (#{tunnelId,jdbcType=CHAR}, #{tunnelName,jdbcType=VARCHAR}, #{tunnelIntro,jdbcType=VARCHAR},
+        #{projectDesign,jdbcType=CHAR}, #{preliminaryDesign,jdbcType=CHAR},
+        #{constructionDesign,jdbcType=CHAR},
+        #{surroundingEnvironment,jdbcType=CHAR}, #{constructionInformation,jdbcType=CHAR},
+        #{monitoringInformation,jdbcType=CHAR}, #{secondaryLining,jdbcType=CHAR},
+        #{basicFormationInformation,jdbcType=CHAR});
+    </insert>
+
+    <update id="updateByPrimaryKeySelective">
+        update tunnel
+        <set>
+            <if test="tunnelName != null">
+                tunnel_name = #{tunnelName,jdbcType=VARCHAR},
+            </if>
+            <if test="tunnelIntro != null">
+                tunnel_intro = #{tunnelIntro,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where tunnel_id = #{tunnelId,jdbcType=CHAR}
+    </update>
+
+    <select id="listTunnel" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Simple_Column_List"/>
+        from tunnel
+        order by create_time desc limit #{index},#{size};
+    </select>
+
+    <select id="countTunnle" resultType="integer">
+        select count(*) from tunnel;
+    </select>
+
+    <select id="listTunnelName" resultType="map">
+        select tunnel_id as tunnelId, tunnel_name as tunnelName from tunnel order by create_time desc;
+    </select>
+</mapper>

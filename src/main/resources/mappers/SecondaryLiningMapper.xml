@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.SecondaryLiningMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.SecondaryLining">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="lining_type" jdbcType="VARCHAR" property="liningType"/>
+        <result column="invert" jdbcType="VARCHAR" property="invert"/>
+        <result column="second_lining_concrete" jdbcType="VARCHAR" property="secondLiningConcrete"/>
+        <result column="radius_inside_the_second_lining_of_the_vault" jdbcType="VARCHAR"
+                property="radiusInsideTheSecondLiningOfTheVault"/>
+        <result column="the_vault_is_lined_with_a_central_angle" jdbcType="VARCHAR"
+                property="theVaultIsLinedWithACentralAngle"/>
+        <result column="inner_radius_of_arch_foot_second_lining" jdbcType="VARCHAR"
+                property="innerRadiusOfArchFootSecondLining"/>
+        <result column="arch_leg_with_central_angle" jdbcType="VARCHAR" property="archLegWithCentralAngle"/>
+        <result column="radius_inside_the_second_lining_of_the_invert" jdbcType="VARCHAR"
+                property="radiusInsideTheSecondLiningOfTheInvert"/>
+        <result column="inverted_arch_with_central_angle" jdbcType="VARCHAR" property="invertedArchWithCentralAngle"/>
+        <result column="thickness_of_second_lining_of_vault" jdbcType="VARCHAR"
+                property="thicknessOfSecondLiningOfVault"/>
+        <result column="thickness_of_side_wall_lining" jdbcType="VARCHAR" property="thicknessOfSideWallLining"/>
+        <result column="the_thickness_of_the_inverted_arch" jdbcType="VARCHAR"
+                property="theThicknessOfTheInvertedArch"/>
+        <result column="invert_concrete_model" jdbcType="VARCHAR" property="invertConcreteModel"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, lining_type, invert, second_lining_concrete, radius_inside_the_second_lining_of_the_vault,
+        the_vault_is_lined_with_a_central_angle, inner_radius_of_arch_foot_second_lining,
+        arch_leg_with_central_angle, radius_inside_the_second_lining_of_the_invert, inverted_arch_with_central_angle,
+        thickness_of_second_lining_of_vault, thickness_of_side_wall_lining, the_thickness_of_the_inverted_arch,
+        invert_concrete_model
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from secondary_lining
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from secondary_lining
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into secondary_lining (id ) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.SecondaryLining">
+        update secondary_lining
+        <set>
+            <if test="liningType != null">
+                lining_type = #{liningType,jdbcType=VARCHAR},
+            </if>
+            <if test="invert != null">
+                invert = #{invert,jdbcType=VARCHAR},
+            </if>
+            <if test="secondLiningConcrete != null">
+                second_lining_concrete = #{secondLiningConcrete,jdbcType=VARCHAR},
+            </if>
+            <if test="radiusInsideTheSecondLiningOfTheVault != null">
+                radius_inside_the_second_lining_of_the_vault =
+                #{radiusInsideTheSecondLiningOfTheVault,jdbcType=VARCHAR},
+            </if>
+            <if test="theVaultIsLinedWithACentralAngle != null">
+                the_vault_is_lined_with_a_central_angle = #{theVaultIsLinedWithACentralAngle,jdbcType=VARCHAR},
+            </if>
+            <if test="innerRadiusOfArchFootSecondLining != null">
+                inner_radius_of_arch_foot_second_lining = #{innerRadiusOfArchFootSecondLining,jdbcType=VARCHAR},
+            </if>
+            <if test="archLegWithCentralAngle != null">
+                arch_leg_with_central_angle = #{archLegWithCentralAngle,jdbcType=VARCHAR},
+            </if>
+            <if test="radiusInsideTheSecondLiningOfTheInvert != null">
+                radius_inside_the_second_lining_of_the_invert =
+                #{radiusInsideTheSecondLiningOfTheInvert,jdbcType=VARCHAR},
+            </if>
+            <if test="invertedArchWithCentralAngle != null">
+                inverted_arch_with_central_angle = #{invertedArchWithCentralAngle,jdbcType=VARCHAR},
+            </if>
+            <if test="thicknessOfSecondLiningOfVault != null">
+                thickness_of_second_lining_of_vault = #{thicknessOfSecondLiningOfVault,jdbcType=VARCHAR},
+            </if>
+            <if test="thicknessOfSideWallLining != null">
+                thickness_of_side_wall_lining = #{thicknessOfSideWallLining,jdbcType=VARCHAR},
+            </if>
+            <if test="theThicknessOfTheInvertedArch != null">
+                the_thickness_of_the_inverted_arch = #{theThicknessOfTheInvertedArch,jdbcType=VARCHAR},
+            </if>
+            <if test="invertConcreteModel != null">
+                invert_concrete_model = #{invertConcreteModel,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>

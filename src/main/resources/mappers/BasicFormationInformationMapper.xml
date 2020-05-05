@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tunnel.mapper.BasicFormationInformationMapper">
+    <resultMap id="BaseResultMap" type="com.example.tunnel.domain.BasicFormationInformation">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="year" jdbcType="VARCHAR" property="year"/>
+        <result column="lithology" jdbcType="VARCHAR" property="lithology"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="degree_of_weathering" jdbcType="VARCHAR" property="degreeOfWeathering"/>
+        <result column="basic_allowable_bearing_capacity" jdbcType="VARCHAR" property="basicAllowableBearingCapacity"/>
+        <result column="stratigraphic_distribution_range" jdbcType="VARCHAR" property="stratigraphicDistributionRange"/>
+        <result column="tendency" jdbcType="VARCHAR" property="tendency"/>
+        <result column="angle" jdbcType="VARCHAR" property="angle"/>
+        <result column="overall_stratigraphic_description" jdbcType="VARCHAR"
+                property="overallStratigraphicDescription"/>
+        <result column="associated_file_index" jdbcType="VARCHAR" property="associatedFileIndex"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, `name`, `year`, lithology, code, degree_of_weathering, basic_allowable_bearing_capacity,
+        stratigraphic_distribution_range, tendency, angle, overall_stratigraphic_description,
+        associated_file_index
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from basic_formation_information
+        where id = #{id,jdbcType=CHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from basic_formation_information
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+
+    <insert id="insert" parameterType="java.lang.String">
+        insert into basic_formation_information (id) values (#{id,jdbcType=CHAR})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.tunnel.domain.BasicFormationInformation">
+        update basic_formation_information
+        <set>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                `year` = #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="lithology != null">
+                lithology = #{lithology,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="degreeOfWeathering != null">
+                degree_of_weathering = #{degreeOfWeathering,jdbcType=VARCHAR},
+            </if>
+            <if test="basicAllowableBearingCapacity != null">
+                basic_allowable_bearing_capacity = #{basicAllowableBearingCapacity,jdbcType=VARCHAR},
+            </if>
+            <if test="stratigraphicDistributionRange != null">
+                stratigraphic_distribution_range = #{stratigraphicDistributionRange,jdbcType=VARCHAR},
+            </if>
+            <if test="tendency != null">
+                tendency = #{tendency,jdbcType=VARCHAR},
+            </if>
+            <if test="angle != null">
+                angle = #{angle,jdbcType=VARCHAR},
+            </if>
+            <if test="overallStratigraphicDescription != null">
+                overall_stratigraphic_description = #{overallStratigraphicDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="associatedFileIndex != null">
+                associated_file_index = #{associatedFileIndex,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+</mapper>
